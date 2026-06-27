@@ -1,0 +1,9 @@
+#!r6rs ; -*- mode: scheme; coding: utf-8 -*-
+(import (akku format manifest))
+
+(akku-package ("makeboot" "1.0.0")
+  (synopsis "Provides a convenient wrapper for creating Chez Scheme boot files from the command line")
+  (authors "irrelevant.irreverent")
+  (license "MIT")
+  (depends ("chez-srfi" ">=0.0.0-akku <1.0.0"))
+)
