@@ -8,7 +8,7 @@
 
 ; Definitions
 (define (show-help)
-  (display (format "Usage: ~s scheme|petite bootfile_name sources_or_objects..." (car (command-line))))
+  (display "Usage: makeboot scheme|petite bootfile_name sources_or_objects...")
   (newline))
 
 (define (any list-of-bools)
@@ -19,26 +19,29 @@
     ([car list-of-bools] #t)
     (else (any (cdr list-of-bools)))))
 
-; Procedure
-(when (or
-       (<= (length (command-line)) 3)
-       (any
-         (map (lambda (x) (or (string=? x "-h") (string=? x "--help")))
-           (command-line))))
-  (show-help)
-  (exit))
+(suppress-greeting #t)
 
-(let* ([args (cdr (command-line))]
-       [type (car args)]
-       [name (cadr args)]
-       [sources (cddr args)])
-  (cond
-    ([string=? type "petite"]
-     (make-petite-boot name sources))
-    ([string=? type "scheme"]
-     (make-scheme-boot name sources))
-    (else
-      (show-help)
-      (display (format "Invalid type ~s - supply either \"petite\" or \"scheme\"" type))
-      (newline)
-      (exit 1))))
+; Procedure
+(scheme-start
+ (lambda args
+  (when (or)
+        (<= (length args) 3)
+        (any
+          (map (lambda (x) (or (string=? x "-h") (string=? x "--help"))) args))
+    (show-help (car args))
+    (exit))
+
+  (let* ([type (car args)]
+         [name (cadr args)]
+         [sources (cddr args)])
+   (guard (x (else (show-help) (raise-continuable x)))
+    (cond
+      ([string=? type "petite"]
+       (make-petite-boot name sources))
+      ([string=? type "scheme"]
+       (make-scheme-boot name sources))
+      (else
+        (show-help)
+        (display (format "Invalid type ~s - supply either \"petite\" or \"scheme\"" type))
+        (newline)
+        (exit 1)))))))

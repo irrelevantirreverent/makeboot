@@ -20,6 +20,5 @@ get_script_dir()
 
 SCRIPT_DIR="$(get_script_dir)"
 pushd "$SCRIPT_DIR" >/dev/null || exit 1
-eval $(.akku/env -s)
-bin/makeboot.sps "$@"
+scheme -b ./makeboot.boot "$@"
 popd >/dev/null || exit 1

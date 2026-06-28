@@ -7,6 +7,9 @@ Uses [Akku](https://akkuscm.org/) (the Scheme package manager), so install that 
 After cloning the repository and navigating to the directory you placed it in,
 ```sh
 akku install # install dependencies
+.akku/env
+./build.ss
+exit # exit the shell started by running .akku/env
 ```
 
 If you'd like to install for use on the command line, the way I would recommend is creating a symlink to `run.sh` and placing that link somewhere registered in your PATH. I personally placed a link under my home directory at `~/.local/bin/` (and I named the link `makeboot` so I can use it as below), but anywhere and any name will work just fine as long as it's registered on your PATH.
